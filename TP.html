@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>TP.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="tp-snakemake">TP snakemake</h1>
+<ul>
+<li>Author: Julie Ripoll</li>
+<li>Contact: julie.ripoll87@gmail.com</li>
+<li>Date: 2022-09-14</li>
+</ul>
+<p>Aim: First steps with snakemake</p>
+<hr>
+<h2 id="installation">Installation</h2>
+<p>In this example we will use miniconda a package manager, to facilitate installation of programs and other tools.</p>
+<p>Download miniconda at: https://docs.conda.io/en/latest/miniconda.html</p>
+<p>(depend on your computer system)</p>
+<p>Launch installation in a new terminal, here an example for Linux:</p>
+<pre class="hljs"><code><div>bash ./Miniconda3-py39_4.12.0-Linux-x86_64.sh
+</div></code></pre>
+<p>Update conda:</p>
+<pre class="hljs"><code><div>conda update conda
+</div></code></pre>
+<p>Install mamba (C++ implementation of conda, more efficient):</p>
+<pre class="hljs"><code><div>conda install -n base -c conda-forge mamba
+</div></code></pre>
+<p>Install snakemake (for Windows install snakemake-minimal instead):</p>
+<pre class="hljs"><code><div>mamba create -c conda-forge -c bioconda -n snakemake snakemake
+</div></code></pre>
+<p>Activate the snakemake environment:</p>
+<pre class="hljs"><code><div>conda activate snakemake
+</div></code></pre>
+<p>Try your installation:</p>
+<pre class="hljs"><code><div>snakemake --<span class="hljs-built_in">help</span>
+</div></code></pre>
+<p>For more informations on conda command look at this <a href="https://docs.conda.io/projects/conda/en/4.6.0/_downloads/52a95608c49671267e40c689e0bc00ca/conda-cheatsheet.pdf">cheat sheet</a></p>
+<p>Create a directory for this exercise</p>
+<pre class="hljs"><code><div>mkdir exercise
+<span class="hljs-comment"># and move to this directory</span>
+<span class="hljs-built_in">cd</span> exercise
+</div></code></pre>
+<h2 id="download-data">Download data</h2>
+<p>Download a sample with wget:</p>
+<pre class="hljs"><code><div>wget -P data ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR026/SRR026762/SRR026762.fastq.gz
+</div></code></pre>
+<hr>
+<h2 id="workflow">Workflow</h2>
+<p>We will build a step-by-step snakemake workflow which takes two tools and home-made script.</p>
+<p>The first tool is Cutadapt which cuts fastq files to get better quality reads.
+Documentation: <a href="https://cutadapt.readthedocs.io/en/stable/">Cutadapt</a></p>
+<p>Create a snakefile and paste this rule into it:</p>
+<pre class="hljs"><code><div>rule cutadapt:
+    <span class="hljs-comment"># Aim: removes adapter sequences from high-throughput sequencing reads</span>
+    <span class="hljs-comment"># Use: cutadapt -a ADAPTER [options] [-o output.forward] [-p output.reverse]</span>
+     <span class="hljs-comment"># &lt;input.forward&gt; &lt;input.reverse&gt;</span>
+    message:
+        <span class="hljs-string">"cutadapt ---remove poly-A and adaptors--- on SRR026762"</span>
+    conda:
+        <span class="hljs-string">"envs/quality.yml"</span>
+    input:
+        <span class="hljs-string">"data/SRR026762.fastq.gz"</span>
+    output:
+        <span class="hljs-string">"results/cutadapt/SRR026762.fastq.gz"</span>
+    params:
+        quality = <span class="hljs-number">35</span>,
+        length = <span class="hljs-number">50</span>,
+        adapter = <span class="hljs-string">"'file:adapters.fa'"</span>
+    log:
+        <span class="hljs-string">"results/cutadapt/SRR026762.log"</span>
+    shell:
+        <span class="hljs-string">"cutadapt "</span>
+        <span class="hljs-string">"-a {params.adapter}' "</span>
+        <span class="hljs-string">"-q {params.quality} "</span> <span class="hljs-comment"># filter on quality thresold</span>
+        <span class="hljs-string">"-m {params.length} "</span> <span class="hljs-comment"># keep only read with minimal length defined and &gt;</span>
+        <span class="hljs-string">"-o {output} "</span>
+        <span class="hljs-string">"{input} "</span>
+        <span class="hljs-string">"&gt; {log}"</span>
+</div></code></pre>
+<p>Note:</p>
+<ul>
+<li>this rule contains a <strong>conda</strong> flag with an environment called quality</li>
+<li>this rule uses one sample in input and return one sample in output</li>
+<li>here, the log file will contain the results print in the <a href="https://www.tutorialspoint.com/understanding-stdin-stderr-and-stdout-in-linux#">terminal stdout</a></li>
+</ul>
+<hr>
+<p>We will build the conda file for the rule.</p>
+<p>Create a conda environment configuration file &quot;quality.yml&quot; in a directory called envs.</p>
+<pre class="hljs"><code><div><span class="hljs-attr">name:</span> <span class="hljs-string">quality</span>
+<span class="hljs-attr">channels:</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-string">bioconda</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-string">conda-forge</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-string">defaults</span>
+<span class="hljs-attr">dependencies:</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-string">multiqc=1.0</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-string">cutadapt=2.1</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-string">python=3.6</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-string">dataclasses</span>
+</div></code></pre>
+<p>Note:</p>
+<ul>
+<li>the conda environment YAML file is composed of a name for the environment, channels for download from the online directory and the dependencies which contain all the required softwares.</li>
+<li>here, cutadapt is specified because as it will be used in the Snakefile rule</li>
+</ul>
+<hr>
+<p>How to execute a snakefile</p>
+<p>as a first step, it is useful to test if the workflow is correctly defined and to estimate the amount of computation required.
+The dry-run mode allows you to see the sequence of rules without running them.</p>
+<p>Test running with the dry-run mode:</p>
+<pre class="hljs"><code><div>snakemake -s Snakefile --use-conda -j 1 -p -n
+</div></code></pre>
+<p>For direct running :</p>
+<pre class="hljs"><code><div>snakemake -s Snakefile --use-conda -j 1 -p
+</div></code></pre>
+<p>To remove outputs:</p>
+<pre class="hljs"><code><div>snakemake -s Snakefile -j 1 --delete-all-output
+</div></code></pre>
+<p>Notes:</p>
+<ul>
+<li>
+<p>The -s tells Snakemake which snakefile to run.</p>
+</li>
+<li>
+<p>The --use-conda option tells Snakemake that a conda environment is required.</p>
+</li>
+<li>
+<p>The -j option tells Snakemake how many cores it can use (here only one job is executed), this a mandatory flag.</p>
+</li>
+<li>
+<p>The -p option tells Snakemake to also print the resulting shell command.</p>
+</li>
+<li>
+<p>The -n (or --dry-run) option, Snakemake will only show the running plan instead of actually running the steps.</p>
+</li>
+</ul>
+<hr>
+<p>If we have more than one sample, snakemake can parallelize the rules so that they are executed per sample.
+For this, download more samples in the data directory:</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># install sra-tools</span>
+mamba install -c bioconda sra-tools
+<span class="hljs-comment"># download the NCBI archive</span>
+prefetch -O data/ SRR2931034
+prefetch -O data/ SRR2931035
+<span class="hljs-comment"># extract fastq files</span>
+fastq-dump --split-3 -O SRR2931034/ --gzip data/SRR2931034/*.sra
+fastq-dump --split-3 -O SRR2931035/ --gzip data/SRR2931035/*.sra
+
+<span class="hljs-comment"># reduce files for this TP</span>
+<span class="hljs-comment">## just to gain time</span>
+gzip -dc data/SRR026762.fastq.gz | head -1000000 &gt; data/SRR026762_1M.fastq
+gzip -dc SRR2931034/SRR2931034.fastq.gz | head -1000000 &gt; data/SRR2931034_1M.fastq
+gzip -dc SRR2931035/SRR2931035.fastq.gz | head -1000000 &gt; data/SRR2931035_1M.fastq
+<span class="hljs-comment"># zip them</span>
+gzip data/SRR026762_1M.fastq
+gzip data/SRR2931034_1M.fastq
+gzip data/SRR2931035_1M.fastq
+</div></code></pre>
+<hr>
+<p>Now, we can generalize the cutadapt rule to be used on multiple input files.
+To do this, we will use wildcards.</p>
+<p>Add a wildcard to the cutadapt rule:</p>
+<pre class="hljs"><code><div>rule cutadapt:
+    <span class="hljs-comment"># Aim: removes adapter sequences from high-throughput sequencing reads</span>
+    <span class="hljs-comment"># Use: cutadapt -a ADAPTER [options] [-o output.forward] [-p output.reverse]</span>
+     <span class="hljs-comment"># &lt;input.forward&gt; &lt;input.reverse&gt;</span>
+    message:
+        <span class="hljs-string">"cutadapt ---remove poly-A and adaptors--- on {wildcards.sample}"</span>
+    conda:
+        <span class="hljs-string">"envs/quality.yml"</span>
+    input:
+        <span class="hljs-string">"data/{sample}.fastq.gz"</span>
+    output:
+        <span class="hljs-string">"results/cutadapt/{sample}.fastq.gz"</span>
+    params:
+        quality = <span class="hljs-number">35</span>,
+        length = <span class="hljs-number">50</span>,
+        adapter = <span class="hljs-string">"'file:adapters.fa'"</span>
+    log:
+        <span class="hljs-string">"results/cutadapt/{sample}.log"</span>
+    shell:
+        <span class="hljs-string">"cutadapt "</span>
+        <span class="hljs-string">"-a {params.adapter} "</span>
+        <span class="hljs-string">"-q {params.quality} "</span> <span class="hljs-comment"># filter on quality thresold</span>
+        <span class="hljs-string">"-m {params.length} "</span> <span class="hljs-comment"># keep only read with minimal length defined and &gt;</span>
+        <span class="hljs-string">"-o {output} "</span>
+        <span class="hljs-string">"{input} "</span>
+        <span class="hljs-string">"&gt; {log}"</span>
+</div></code></pre>
+<p>Here, {sample} is the wildcard to be used.</p>
+<p>This wildcard is a global wildcard and must be declared as such in the snakefile:</p>
+<pre class="hljs"><code><div>SAMPLE, = glob_wildcards(<span class="hljs-string">"data/{sample}.fastq.gz"</span>)
+</div></code></pre>
+<p>Now, Snakemake needs a rule called <strong>all</strong> or <strong>defaults</strong> to build the DAG of the jobs.</p>
+<p>Add the rule all before the cutadapt rule:</p>
+<pre class="hljs"><code><div>rule all:
+    input:
+        expand(<span class="hljs-string">"results/cutadapt/{sample}.fastq.gz"</span>, sample = SAMPLE)
+
+</div></code></pre>
+<p>This rule takes as input the outputs of the cutadapt rule.
+The expand function resolves the wildcards and allows snakemake to decompile the output tree.</p>
+<hr>
+<p>Externalization of parameters is interesting for reusing the workflow without modifying the code.
+For this, a configuration file can be used.</p>
+<p>Create a configuration file &quot;Config.yaml&quot;.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">## Params for CUTADAPT</span>
+<span class="hljs-attr">cutadapt:</span>
+  <span class="hljs-attr">quality:</span> <span class="hljs-number">35</span>
+  <span class="hljs-attr">length:</span> <span class="hljs-number">50</span>
+  <span class="hljs-attr">adapters:</span> <span class="hljs-string">"'file:adapters.fa'"</span>
+</div></code></pre>
+<p>Note:</p>
+<ul>
+<li>a configuration file helps to reduce code errors by externalizing parameters that may differ between experiments.</li>
+<li>this step requires some modifications to the rule</li>
+<li>the configuration file can be declared in the Snakefile using the <strong>configfile</strong> tag: <strong>&quot;Config.yaml&quot;</strong> at the beginning of the file or at runtime in the command line.</li>
+</ul>
+<pre class="hljs"><code><div>snakemake -s Snakefile --use-conda --configfile Config.yaml -j 1 -p -n
+</div></code></pre>
+<p>Update the rule cutadapt:</p>
+<pre class="hljs"><code><div>rule cutadapt:
+    <span class="hljs-comment"># Aim: removes adapter sequences from high-throughput sequencing reads</span>
+    <span class="hljs-comment"># Use: cutadapt -a ADAPTER [options] [-o output.forward] [-p output.reverse]</span>
+     <span class="hljs-comment"># &lt;input.forward&gt; &lt;input.reverse&gt;</span>
+    message:
+        <span class="hljs-string">"cutadapt ---remove poly-A and adaptors--- on {wildcards.sample}"</span>
+    conda:
+        <span class="hljs-string">"envs/quality.yml"</span>
+    input:
+        <span class="hljs-string">"data/{sample}.fastq.gz"</span>
+    output:
+        <span class="hljs-string">"results/cutadapt/{sample}.fastq.gz"</span>
+    params:
+        quality = config[<span class="hljs-string">"cutadapt"</span>][<span class="hljs-string">"quality"</span>],
+        length = config[<span class="hljs-string">"cutadapt"</span>][<span class="hljs-string">"length"</span>],
+        adapter = config[<span class="hljs-string">"cutadapt"</span>][<span class="hljs-string">"adapters"</span>]
+    log:
+        <span class="hljs-string">"results/cutadapt/{sample}.log"</span>
+    shell:
+        <span class="hljs-string">"cutadapt "</span>
+        <span class="hljs-string">"-a {params.adapter} "</span>
+        <span class="hljs-string">"-q {params.quality} "</span> <span class="hljs-comment"># filter on quality thresold</span>
+        <span class="hljs-string">"-m {params.length} "</span> <span class="hljs-comment"># keep only read with minimal length defined and &gt;</span>
+        <span class="hljs-string">"-o {output} "</span>
+        <span class="hljs-string">"{input} "</span>
+        <span class="hljs-string">"&gt; {log}"</span>
+</div></code></pre>
+<p>Cutadapt can parallelize its process with an option for cores.
+This parallelization can be added in the rule with the <strong>threads</strong> tag which takes the number of cores provided by the user.
+You can declare the number of threads in the configuration file, to be externalized, which makes it easier to define a number of cores adapted to your computer.
+It's also possible to use a function in the snakefile that automatically takes the number of available cores.</p>
+<pre class="hljs"><code><div>rule cutadapt:
+    <span class="hljs-comment"># Aim: removes adapter sequences from high-throughput sequencing reads</span>
+    <span class="hljs-comment"># Use: cutadapt -a ADAPTER [options] [-o output.forward] [-p output.reverse]</span>
+     <span class="hljs-comment"># &lt;input.forward&gt; &lt;input.reverse&gt;</span>
+    message:
+        <span class="hljs-string">"cutadapt ---remove poly-A and adaptors--- on {wildcards.sample}"</span>
+    conda:
+        <span class="hljs-string">"envs/quality.yml"</span>
+    input:
+        <span class="hljs-string">"data/{sample}.fastq.gz"</span>
+    output:
+        <span class="hljs-string">"results/cutadapt/{sample}.fastq.gz"</span>
+    params:
+        quality = config[<span class="hljs-string">"cutadapt"</span>][<span class="hljs-string">"quality"</span>],
+        length = config[<span class="hljs-string">"cutadapt"</span>][<span class="hljs-string">"length"</span>],
+        adapter = config[<span class="hljs-string">"cutadapt"</span>][<span class="hljs-string">"adapters"</span>]
+    threads:
+        <span class="hljs-number">3</span>
+    log:
+        <span class="hljs-string">"results/cutadapt/{sample}.log"</span>
+    shell:
+        <span class="hljs-string">"cutadapt "</span>
+        <span class="hljs-string">"-a {params.adapter} "</span>
+        <span class="hljs-string">"-q {params.quality} "</span> <span class="hljs-comment"># filter on quality thresold</span>
+        <span class="hljs-string">"-m {params.length} "</span> <span class="hljs-comment"># keep only read with minimal length defined and &gt;</span>
+        <span class="hljs-string">"-o {output} "</span>
+        <span class="hljs-string">"-j {threads} "</span>
+        <span class="hljs-string">"{input} "</span>
+        <span class="hljs-string">"&gt; {log}"</span>
+</div></code></pre>
+<hr>
+<p>Now, we will create a script to test the aggregation rules.
+In a terminal, create a new bash script and open it:</p>
+<pre class="hljs"><code><div>touch aggregation_test.py
+<span class="hljs-comment"># open with viw or other code editor</span>
+vim aggregation_test.py
+</div></code></pre>
+<p>Our goal is to see how the aggregation works in snakemake, using the <strong>expand()</strong> function or with a for loop.</p>
+<p>Paste this code inside:</p>
+<pre class="hljs"><code><div><span class="hljs-comment">#!/bin/python</span>
+
+<span class="hljs-keyword">from</span> contextlib <span class="hljs-keyword">import</span> redirect_stdout
+
+<span class="hljs-keyword">with</span> open(snakemake.output[<span class="hljs-number">0</span>], <span class="hljs-string">'w'</span>) <span class="hljs-keyword">as</span> f:
+    <span class="hljs-keyword">with</span> redirect_stdout(f):
+        print(snakemake.input)
+        print(type(snakemake.input))
+</div></code></pre>
+<p>And a new rule in your snakefile</p>
+<pre class="hljs"><code><div>rule test_aggregation_expand:
+    <span class="hljs-comment"># Aim: How works the aggregation</span>
+    input:
+        expand(<span class="hljs-string">"results/cutadapt/{sample}.fastq.gz"</span>, sample = SAMPLE)
+    output:
+        <span class="hljs-string">"results/aggregation_test_expand.txt"</span>
+    script:
+        <span class="hljs-string">'aggregation_test.py'</span>
+</div></code></pre>
+<p>Add the second test with the for loop:</p>
+<pre class="hljs"><code><div>rule test_aggregation_loop:
+    <span class="hljs-comment"># Aim: How works the aggregation</span>
+    input:
+        [<span class="hljs-string">"results/cutadapt/{sample}.fastq.gz"</span>.format(sample=sample) <span class="hljs-keyword">for</span> sample <span class="hljs-keyword">in</span> SAMPLE]
+    output:
+        <span class="hljs-string">"results/aggregation_test_loop.txt"</span>
+    script:
+        <span class="hljs-string">'aggregation_test.py'</span>
+</div></code></pre>
+<p>Now, you need to change the outputs in the rule <strong>all</strong>.
+The outputs of cutadapt are not needed because the wildcard is resolved in the aggregation rules.</p>
+<pre class="hljs"><code><div>rule all:
+    input:
+        test1 = <span class="hljs-string">"results/aggregation_test_expand.txt"</span>,
+        test2 = <span class="hljs-string">"results/aggregation_test_loop.txt"</span>
+
+</div></code></pre>
+<p>Note: this rule takes as input the outputs of the two independant aggregation rules.</p>
+<hr>
+<p>Create the DAG:</p>
+<p>Snakemake specifies the DAG in &quot;dot&quot; language, using dot from Graphviz.</p>
+<p>Install Graphviz in your snakemake environment:</p>
+<pre class="hljs"><code><div>conda install -c anaconda graphviz
+</div></code></pre>
+<p>Export the DAG of your workflow:</p>
+<pre class="hljs"><code><div>snakemake -s Snakefile --configfile Config.yaml --dag | dot -Tsvg &gt; dag.svg
+</div></code></pre>
+<p>Execute the snakefile</p>
+<pre class="hljs"><code><div>snakemake -s Snakefile --use-conda --configfile Config.yaml -j 2 -p
+</div></code></pre>
+<hr>
+<h2 id="extraction-of-reports">Extraction of reports</h2>
+<p>You can create automatic report from your snakemake directory, which is usefull for benchmarking, with this command:</p>
+<pre class="hljs"><code><div>snakemake -s Snakefile --configfile Config.yaml --report report.html
+</div></code></pre>
+<p>All information contained in the report (e.g. runtime statistics) is automatically collected after the snakefile is executed.</p>
+<p>You can also define a specific output to add to the report file by declaring <strong>report()</strong> in the output.</p>
+<p>This is an example:</p>
+<pre class="hljs"><code><div>rule plot_commits_and_releases:
+    input:
+        <span class="hljs-string">"tables/git-log.csv"</span>
+    output:
+        report(<span class="hljs-string">"plots/commits+releases.svg"</span>, category=<span class="hljs-string">"Plots"</span>, caption=<span class="hljs-string">"report/commits+releases.rst"</span>)
+    conda:
+        <span class="hljs-string">"envs/stats.yaml"</span>
+    notebook:
+        <span class="hljs-string">"notebooks/commits+releases.py.ipynb"</span>
+</div></code></pre>
+<p>We do not apply it in this TP but I invite you to test it in one of your pipeline.</p>
+<hr>
+<p>Some tools are useful to exploit the log files or outputs containing statistics. MultiQC summarizes the statistics of the steps performed by a tool.
+Documentation: <a href="https://multiqc.info/">MultiQC</a></p>
+<p>Add another rule to the snakefile:</p>
+<pre class="hljs"><code><div>rule MultiQC:
+    <span class="hljs-comment"># Aim: Check quality of the results from another tool.</span>
+    message:
+        <span class="hljs-string">"""--- MultiQC reports on cutadapt outputs ---"""</span>
+    conda:
+        <span class="hljs-string">"envs/quality.yml"</span>
+    input:
+        expand(<span class="hljs-string">"results/cutadapt/{sample}.fastq.gz"</span>, sample = SAMPLE)
+    params:
+        filename = <span class="hljs-string">"report_cutadapt.html"</span>, <span class="hljs-comment"># report name</span>
+        module = <span class="hljs-string">'cutadapt'</span>, <span class="hljs-comment"># tool previously used</span>
+        outfolder = <span class="hljs-string">'results/cutadapt/*.log'</span> <span class="hljs-comment"># log file</span>
+    output:
+        directory(<span class="hljs-string">'results/Quality/MQC_cutadapt/'</span>)
+    log:
+        <span class="hljs-string">'results/Quality/MQC_cutadapt.done'</span>
+    shell:
+        <span class="hljs-string">"multiqc "</span>
+        <span class="hljs-string">"-n {params.filename} "</span>
+        <span class="hljs-string">"-m {params.module} "</span>
+        <span class="hljs-string">"-d {params.outfolder} "</span>
+        <span class="hljs-string">"--outdir {output} "</span>
+        <span class="hljs-string">"2&gt;{log}"</span>
+</div></code></pre>
+<p>Note:</p>
+<ul>
+<li>This new rule is dependant from the cutadapt rule because it uses its outputs files.</li>
+<li>This rule takes an argument in the output: <strong>directory()</strong>, this tag defines the type of output. Other tags can be used like <strong>temp()</strong> for temporary file that are deleted after the rule is executed.</li>
+<li>There is no wildcard in the output because of the use of <strong>expand()</strong> in the input. Expand() gives all the samples as input to the rule and not one by one. It's an aggregation.</li>
+</ul>
+<p>Remember to add the outputs to the rule <strong>all</strong>.</p>
+<hr>
+<h2 id="checkpoints">Checkpoints</h2>
+<p>One might have to filter out samples that do not pass the quality check (QC).</p>
+<p>Because QC is an intermediate result of the same data analysis, it may be necessary to determine the part of the DAG that is downstream of QC only after QC has been finalized.</p>
+<p>One option is to separate the QC and the actual analysis into two workflows, or to define a separate target rule for the QC, so that it can be performed manually upstream, before the actual analysis is started.</p>
+<p>Alternatively, if QC is to occur automatically as part of the overall workflow, one can use Snakemake's conditional execution capabilities, using the checkpoint.</p>
+<p>It is also possible to use checkpoints for cases where the output files are unknown before execution.</p>
+<p>Here, we will check the outputs of an assembler. An assemblera allows to create a new reference genome or transcriptome based on your samples. They globally used iterative cycle of DeBruyn graph with different k-mer lengths.</p>
+<p>Create a new environment called assembly.yml in the envs directory:</p>
+<pre class="hljs"><code><div><span class="hljs-attr">name:</span> <span class="hljs-string">assembly</span>
+<span class="hljs-attr">channels:</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-string">bioconda</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-string">defaults</span>
+<span class="hljs-attr">dependencies:</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-string">megahit</span>
+</div></code></pre>
+<p>Now, add these rules to your snakefile and add the output to the rule all.</p>
+<pre class="hljs"><code><div>rule commalist:
+    <span class="hljs-comment"># Aim: list input files in a comma separated list</span>
+    message:
+        <span class="hljs-string">"""--- Convert dict input files in a comma separated list ---"""</span>
+    input:
+        expand(<span class="hljs-string">"results/cutadapt/{sample}.fastq.gz"</span>, sample = SAMPLE)
+    output:
+        <span class="hljs-string">"results/cutadapt/list_samples.txt"</span>
+    shell:
+        <span class="hljs-string">"echo {input} | sed ':a;N;$!ba;s/\\n/,/g' &gt; {output}"</span>
+
+checkpoint assembly:
+    <span class="hljs-comment"># Aim: assembly of reads into contigs.</span>
+    message:
+        <span class="hljs-string">"""--- Megahit assembly in progress ---"""</span>
+    conda:
+        <span class="hljs-string">"envs/assembly.yml"</span>
+    input:
+        <span class="hljs-string">"results/cutadapt/list_samples.txt"</span>
+    threads:
+        <span class="hljs-number">3</span>
+    params:
+        klist = <span class="hljs-string">"29,39,59,79,99"</span>, <span class="hljs-comment"># tool range 15-255</span>
+        kmin = <span class="hljs-string">"21"</span>,
+        kmax = <span class="hljs-string">"141"</span>
+    output:
+        directory(<span class="hljs-string">"megahit_out"</span>)
+    shell:
+        <span class="hljs-string">"megahit "</span>
+        <span class="hljs-string">"-r $(paste {input}) "</span>
+        <span class="hljs-string">"-o {output} "</span>
+        <span class="hljs-string">"-t {threads} "</span>
+        <span class="hljs-string">"--k-list {params.klist} "</span>
+        <span class="hljs-string">"--k-min {params.kmin} "</span>
+        <span class="hljs-string">"--k-max {params.kmax} "</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_file_names</span><span class="hljs-params">(wildcards)</span>:</span>
+    ck_output = checkpoints.assembly.get(**wildcards).output[<span class="hljs-number">0</span>]
+    <span class="hljs-keyword">global</span> SMP
+    SMP, = glob_wildcards(os.path.join(ck_output, <span class="hljs-string">"intermediate_contigs/{name}.contigs.fa"</span>))
+    <span class="hljs-keyword">return</span> expand(os.path.join(ck_output, <span class="hljs-string">"intermediate_contigs/{name}.contigs.fa"</span>), name=SMP)
+
+rule check_contigs:
+    input:
+        get_file_names
+    output:
+        <span class="hljs-string">"results/contigs/summary.txt"</span>
+    shell:
+        <span class="hljs-string">"wc -l {input} &gt; {output}"</span>
+
+</div></code></pre>
+<p>Note:</p>
+<ul>
+<li>the function creates the new wildcards from the output in the directory of the assembly rule.</li>
+<li>you must specify the name of the rule in the function from which the new wildcards will be created.</li>
+<li>here, the next rule entry is a call to this control function. But it can also be in the rule all, if the wildcards are used in other rules.</li>
+</ul>
+<hr>
+<p>Here is another example (from the snakemake documentation) combined with pipe() tag:</p>
+<pre class="hljs"><code><div>rule all:
+    input:
+        <span class="hljs-string">"c.txt"</span>,
+
+checkpoint a:
+    output:
+        <span class="hljs-string">"a.txt"</span>
+    shell:
+        <span class="hljs-string">"touch {output}"</span>
+
+rule b1:
+    output:
+        pipe(<span class="hljs-string">"b.pipe"</span>)
+    shell:
+        <span class="hljs-string">""</span>
+
+rule b2:
+    input:
+        pipe(<span class="hljs-string">"b.pipe"</span>)
+    output:
+        <span class="hljs-string">"b.txt"</span>
+    shell:
+        <span class="hljs-string">"touch {output}"</span>
+
+rule c:
+    input:
+        <span class="hljs-string">"a.txt"</span>,
+        <span class="hljs-string">"b.txt"</span>,
+    output:
+        <span class="hljs-string">"c.txt"</span>
+    shell:
+        <span class="hljs-string">"touch {output}"</span>
+</div></code></pre>
+<p>The <strong>pipe()</strong> tag allows you to pass the output from one rule to another in the stream without writing it to disk. This is different from <strong>temp()</strong> which writes the output and then deletes it.</p>
+
+</body>
+</html>

@@ -1,0 +1,6 @@
+name: assembly
+channels:
+  - bioconda
+  - defaults
+dependencies:
+  - megahit

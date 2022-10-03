@@ -1,0 +1,10 @@
+name: quality
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - multiqc=1.0
+  - cutadapt=2.1
+  - python=3.6
+  - dataclasses

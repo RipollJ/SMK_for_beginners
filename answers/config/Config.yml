@@ -1,0 +1,5 @@
+## Params for CUTADAPT
+cutadapt:
+  quality: 35
+  length: 50
+  adapters: "'file:resources/adapters.fa'"

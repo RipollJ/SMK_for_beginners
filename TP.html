@@ -368,7 +368,7 @@ code {
 <h1 id="tp-snakemake">TP snakemake</h1>
 <ul>
 <li>Author: Julie Ripoll</li>
-<li>Contact: julie.ripoll87@gmail.com</li>
+<li>Contact: ripollj@neuf.fr</li>
 <li>Date: 2022-09-14</li>
 </ul>
 <p>Aim: First steps with snakemake</p>
@@ -405,6 +405,8 @@ code {
 <p>Download a sample with wget:</p>
 <pre class="hljs"><code><div>wget -P data ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR026/SRR026762/SRR026762.fastq.gz
 </div></code></pre>
+<p>The option -P define the new directory where data will be downloaded.
+Documentation: <a href="https://doc.ubuntu-fr.org/wget">wget</a></p>
 <hr>
 <h2 id="workflow">Workflow</h2>
 <p>We will build a step-by-step snakemake workflow which takes two tools and home-made script.</p>
@@ -426,7 +428,7 @@ Documentation: <a href="https://cutadapt.readthedocs.io/en/stable/">Cutadapt</a>
     params:
         quality = <span class="hljs-number">35</span>,
         length = <span class="hljs-number">50</span>,
-        adapter = <span class="hljs-string">"'file:adapters.fa'"</span>
+        adapter = <span class="hljs-string">"'file:resources/adapters.fa'"</span>
     log:
         <span class="hljs-string">"results/cutadapt/SRR026762.log"</span>
     shell:
@@ -443,6 +445,7 @@ Documentation: <a href="https://cutadapt.readthedocs.io/en/stable/">Cutadapt</a>
 <li>this rule contains a <strong>conda</strong> flag with an environment called quality</li>
 <li>this rule uses one sample in input and return one sample in output</li>
 <li>here, the log file will contain the results print in the <a href="https://www.tutorialspoint.com/understanding-stdin-stderr-and-stdout-in-linux#">terminal stdout</a></li>
+<li>this notation: &quot;'file:resources/adapters.fa'&quot; depends on the cutadapt program, don't worry about it</li>
 </ul>
 <hr>
 <p>We will build the conda file for the rule.</p>
@@ -535,7 +538,7 @@ To do this, we will use wildcards.</p>
     params:
         quality = <span class="hljs-number">35</span>,
         length = <span class="hljs-number">50</span>,
-        adapter = <span class="hljs-string">"'file:adapters.fa'"</span>
+        adapter = <span class="hljs-string">"'file:resources/adapters.fa'"</span>
     log:
         <span class="hljs-string">"results/cutadapt/{sample}.log"</span>
     shell:
@@ -551,6 +554,7 @@ To do this, we will use wildcards.</p>
 <p>This wildcard is a global wildcard and must be declared as such in the snakefile:</p>
 <pre class="hljs"><code><div>SAMPLE, = glob_wildcards(<span class="hljs-string">"data/{sample}.fastq.gz"</span>)
 </div></code></pre>
+<p>This notation <code>SAMPLE,</code> unpacks the first detected wildcard because <code>glob_wildcards</code> returns a namedtuple<a href="https://snakemake-api.readthedocs.io/en/latest/api_reference/internal/snakemake.html#snakemake.io.glob_wildcards"><sup>ref</sup></a>.</p>
 <p>Now, Snakemake needs a rule called <strong>all</strong> or <strong>defaults</strong> to build the DAG of the jobs.</p>
 <p>Add the rule all before the cutadapt rule:</p>
 <pre class="hljs"><code><div>rule all:
@@ -568,7 +572,7 @@ For this, a configuration file can be used.</p>
 <span class="hljs-attr">cutadapt:</span>
   <span class="hljs-attr">quality:</span> <span class="hljs-number">35</span>
   <span class="hljs-attr">length:</span> <span class="hljs-number">50</span>
-  <span class="hljs-attr">adapters:</span> <span class="hljs-string">"'file:adapters.fa'"</span>
+  <span class="hljs-attr">adapters:</span> <span class="hljs-string">"'file:resources/adapters.fa'"</span>
 </div></code></pre>
 <p>Note:</p>
 <ul>

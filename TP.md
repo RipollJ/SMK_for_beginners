@@ -1,7 +1,7 @@
 # TP snakemake
 
 - Author: Julie Ripoll
-- Contact: julie.ripoll87@gmail.com
+- Contact: ripollj@neuf.fr
 - Date: 2022-09-14
 
 Aim: First steps with snakemake
@@ -61,6 +61,9 @@ Download a sample with wget:
 ```bash
 wget -P data ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR026/SRR026762/SRR026762.fastq.gz
 ```
+The option -P define the new directory where data will be downloaded.
+Documentation: [wget](https://doc.ubuntu-fr.org/wget)
+
 --------------
 ## Workflow
 
@@ -86,7 +89,7 @@ rule cutadapt:
     params:
         quality = 35,
         length = 50,
-        adapter = "'file:adapters.fa'"
+        adapter = "'file:resources/adapters.fa'"
     log:
         "results/cutadapt/SRR026762.log"
     shell:
@@ -102,6 +105,7 @@ Note:
 - this rule contains a **conda** flag with an environment called quality
 - this rule uses one sample in input and return one sample in output
 - here, the log file will contain the results print in the [terminal stdout](https://www.tutorialspoint.com/understanding-stdin-stderr-and-stdout-in-linux#)
+- this notation: "'file:resources/adapters.fa'" depends on the cutadapt program, don't worry about it
 
 
 -------------
@@ -201,7 +205,7 @@ rule cutadapt:
     params:
         quality = 35,
         length = 50,
-        adapter = "'file:adapters.fa'"
+        adapter = "'file:resources/adapters.fa'"
     log:
         "results/cutadapt/{sample}.log"
     shell:
@@ -219,6 +223,7 @@ This wildcard is a global wildcard and must be declared as such in the snakefile
 ```python
 SAMPLE, = glob_wildcards("data/{sample}.fastq.gz")
 ```
+This notation `SAMPLE,` unpacks the first detected wildcard because `glob_wildcards` returns a namedtuple[<sup>ref</sup>](https://snakemake-api.readthedocs.io/en/latest/api_reference/internal/snakemake.html#snakemake.io.glob_wildcards).
 
 Now, Snakemake needs a rule called **all** or **defaults** to build the DAG of the jobs.
 
@@ -242,7 +247,7 @@ Create a configuration file "Config.yaml".
 cutadapt:
   quality: 35
   length: 50
-  adapters: "'file:adapters.fa'"
+  adapters: "'file:resources/adapters.fa'"
 ```
 Note: 
 - a configuration file helps to reduce code errors by externalizing parameters that may differ between experiments.
